@@ -1,0 +1,29 @@
+{%extends "base.html"%}
+
+{%block content%}
+
+<center>
+
+
+
+	<br>
+	<br>
+
+	<!-- <img src="{{url_for('static', filename='file.jpg')}}" alt="image" height=340px> -->
+	<!-- {{url_for('static', filename='file.avi')}} -->
+	<h2 class="display-1">Predict Video-Caption</h2>
+
+	<video width="320" height="240" controls>
+		<source src={{ url_for('static', filename="test1.mp4" ) }} type="video/mp4">
+		Your browser does not support the video tag.
+	</video>
+
+	<br>
+
+	<h2 class='text-white'>
+		{{data}}
+	</h2>
+
+</center>
+
+{%endblock%}
