@@ -1,15 +1,18 @@
 import pathlib
 import pickle
-
+import dill
 import torch.nn.functional as F
 import numpy as np
 import re
 import math
 from torchtext import data
+import torchtext
 from torch.autograd import Variable
 import torch.nn as nn
 import torch
 import copy
+from load_trg import load_trg
+temp = pathlib.PosixPath
 pathlib.PosixPath = pathlib.WindowsPath
 
 
@@ -499,27 +502,25 @@ class Transformer(nn.Module):
 if __name__ == '__main__':
 
     opt = {
-        'trg_lang': 'en',
         'max_strlen': 160,
         'batchsize': 1500,
-        'device': 'cpu',
+        'device': 'cuda',
         'd_model': 512,
         'n_layers': 6,
         'heads': 8,
         'dropout': 0.1,
-        'lr': 0.0001,
-        'epochs': 2,
-        'printevery': 100,
         'k': 5,
     }
-    with open('data\cab.pkl', 'rb') as pickle_file:
-        TRG = pickle.load(pickle_file)
-    model_tran = Transformer(
-        len(TRG.vocab), opt['d_model'], opt['n_layers'], opt['heads'], opt['dropout'])
-
-    model_tran.load_state_dict(torch.load(
-        'model_test.pt', map_location=torch.device('cpu'))['state_dict'])
-    fear = np.load('testv1RN40.npy')
-    trans_sent = translate_sentence(
-        fear, model_tran, TRG, opt['device'], opt['k'], opt['max_strlen'])
-    print('predict: ', trans_sent)
+    TRG = load_trg()
+    # with (open('data/vocab.pkl', 'rb')) as pickel_file:
+    #     TRG = dill.load(pickel_file)
+    print(len(TRG.vocab))
+    # model_tran = Transformer(
+    #     len(TRG.vocab), opt['d_model'], opt['n_layers'], opt['heads'], opt['dropout'])
+    # state = torch.load(
+    #     'model_test.pt', map_location=torch.device('cuda'))
+    # model_tran.load_state_dict(state['state_dict'])
+    # fear = np.load('testv1RN40.npy')
+    # trans_sent = translate_sentence(
+    #     fear, model_tran, TRG, opt['device'], opt['k'], opt['max_strlen'])
+    # print('predict: ', trans_sent)
