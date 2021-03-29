@@ -25,11 +25,7 @@ class tokenize(object):
         return [tok.text for tok in self.nlp.tokenizer(sentence) if tok.text != " "]
 
 
-def load_trg():
+def get_trg():
     with (open('vocab.pkl', 'rb')) as pickel_file:
         TRG = dill.load(pickel_file)
-        print(len(TRG.vocab))
     return TRG
-
-
-load_trg()

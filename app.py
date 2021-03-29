@@ -1,14 +1,12 @@
 from flask import Flask, render_template, request
-from cv2 import cv2
-from keras.models import load_model
-import numpy as np
+from models import predict_cap
 from keras.applications import ResNet152
 from tts import text_to_speech
 from fearture import feature_cap
 from flask_cors import cross_origin
 resnet = ResNet152(include_top=False, weights='imagenet',
                    input_shape=(224, 224, 3), pooling='avg')
-# resnet = load_model('resnet.h5')
+
 app = Flask(__name__)
 
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 1
@@ -25,11 +23,11 @@ def after():
     global resnet
     rq = request.files['file']
     rq.save('static/test.mp4')
-    fe = feature_cap(resnet, 'static/test.mp4')
-    # data = 'cho trieu'
+    fear = feature_cap(resnet, 'static/test.mp4')
     gender = request.form['voices']
-    text_to_speech('hi my name trieu  stupid', gender)
-    return render_template('after.html', data=fe)
+    cap = predict_cap(fear)
+    text_to_speech(cap, gender)
+    return render_template('after.html', data=cap)
 
 
 if __name__ == "__main__":

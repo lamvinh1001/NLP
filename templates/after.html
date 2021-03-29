@@ -11,9 +11,8 @@
 
 	<!-- <img src="{{url_for('static', filename='file.jpg')}}" alt="image" height=340px> -->
 	<!-- {{url_for('static', filename='file.avi')}} -->
-	<h2 class="text-primary">Predict Video-Caption</h2>
-
-	<video width="400" height="300" controls>
+	<h2 class="text-danger">Predict Video-Caption</h2>	
+	<video width="500" height="400" controls>
 		<source src={{ url_for('static', filename="test.mp4" ) }} type="video/mp4">
 		Your browser does not support the video tag.
 	</video>
@@ -22,16 +21,9 @@
 
 	<main>
 		<form class="input" id="voice-form" method="post">
-			<div class="field">
+			<div class="caption">
 				<h2>{{data}}</h2>
 			</div>
-			<!-- <div class="field">
-				<label for="voices">Choose a Voice Assistant</label>
-				<select name="vc" id="voices">
-					<option value="Male">Male</option>
-					<option value="Female">Female</option>
-				</select>
-			</div> -->
 		</form>
 	</main>
 
