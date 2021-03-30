@@ -4,12 +4,34 @@ from keras.applications import ResNet152
 from tts import text_to_speech
 from fearture import feature_cap
 from flask_cors import cross_origin
+import re
+import spacy
+import gc
+gc.collect()
+import torch
+torch.cuda.empty_cache()
 resnet = ResNet152(include_top=False, weights='imagenet',
                    input_shape=(224, 224, 3), pooling='avg')
 
 app = Flask(__name__)
 
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 1
+
+
+class tokenize(object):
+
+    def __init__(self, lang):
+        self.nlp = spacy.load(lang)
+
+    def tokenizer(self, sentence):
+        sentence = re.sub(
+            r"[\*\"“”\n\\…\+\-\/\=\(\)‘•:\[\]\|’\!;]", " ", str(sentence))
+        sentence = re.sub(r"[ ]+", " ", sentence)
+        sentence = re.sub(r"\!+", "!", sentence)
+        sentence = re.sub(r"\,+", ",", sentence)
+        sentence = re.sub(r"\?+", "?", sentence)
+        sentence = sentence.lower()
+        return [tok.text for tok in self.nlp.tokenizer(sentence) if tok.text != " "]
 
 
 @app.route('/')
@@ -31,4 +53,4 @@ def after():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8000)
+    app.run(debug=True)

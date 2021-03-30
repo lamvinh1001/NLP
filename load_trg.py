@@ -27,5 +27,6 @@ class tokenize(object):
 
 def get_trg():
     with (open('vocab.pkl', 'rb')) as pickel_file:
+        # TRG = dill.load(pickel_file)
         TRG = dill.load(pickel_file)
     return TRG
