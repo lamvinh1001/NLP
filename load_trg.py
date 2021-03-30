@@ -1,7 +1,5 @@
 import re
-import pickle
 import spacy
-import torchtext
 import pathlib
 import torch
 import dill

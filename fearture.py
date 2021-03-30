@@ -1,8 +1,6 @@
-from keras.applications import ResNet152
 import numpy as np
 from cv2 import cv2
-resnet = ResNet152(include_top=False, weights='imagenet',
-                   input_shape=(224, 224, 3), pooling='avg')
+
 
 
 def feature_cap(model, video: str):

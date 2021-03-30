@@ -3,7 +3,7 @@
 {%block content%}
 <center>
 
-    <h1 class='display-1'>Video Caption</h1>
+    <h1 class='display-1 text-primary'>Video Caption</h1>
 
     <br>
     <br>
@@ -11,14 +11,6 @@
     <form action="{{url_for('after')}}" method='POST' enctype='multipart/form-data'>
         <input type="file" name='file'>
         <!-- <input type="submit" name="btn" value='predict caption' class='btn btn-warning'> -->
-
-        <div class="field">
-            <label for="voices">Choose a Voice Assistant</label>
-            <select name="voices" id="voices">
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-            </select>
-        </div>
         <button type="submit" name="'btn">
             Predict
         </button>
