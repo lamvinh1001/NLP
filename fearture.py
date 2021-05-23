@@ -2,7 +2,6 @@ import numpy as np
 from cv2 import cv2
 
 
-
 def feature_cap(model, video: str):
     # số frame ảnh muốn lấy của video
     num = 40

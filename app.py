@@ -2,7 +2,6 @@ import torch
 from flask import Flask, render_template, request
 from models import predict_cap
 from keras.applications import ResNet152
-from tts import text_to_speech
 from fearture import feature_cap
 from flask_cors import cross_origin
 from googletts import speak
@@ -45,13 +44,15 @@ def index():
 def after():
     global resnet
     rq = request.files['file']
-    rq.save('static/test.mp4')
-    fear = feature_cap(resnet, 'static/test.mp4')
-    # gender = request.form['voices']
-    cap = predict_cap(fear)
+    cap = ''
+    file_path = 'static/test.mp4'
+    rq.save(file_path)
+    fears = feature_cap(resnet, file_path)
+
+    cap += predict_cap(fears)
     speak(cap)
     return render_template('after.html', data=cap)
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port='8000')
+    app.run(debug=True)
